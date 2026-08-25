@@ -3,8 +3,10 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+import { PenTool } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,6 +28,7 @@ export function Index() {
   const line1Ref = useRef<HTMLSpanElement>(null);
   const line2Ref = useRef<HTMLSpanElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
+  const penRef = useRef<HTMLDivElement>(null);
 
   // 17 images from public/media, split into 3 columns
   const allImages = Array.from({ length: 17 }, (_, i) => `/media/img-${i + 1}.jpeg`);
@@ -47,7 +50,6 @@ export function Index() {
       { opacity: 1, scale: 1, duration: 1.2, ease: "power2.out" },
       "-=0.4"
     );
-    // Line 1 appears automatically after images
     introTl.fromTo(line1Ref.current,
       { opacity: 0, y: 30 },
       { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
@@ -59,28 +61,40 @@ export function Index() {
       scrollTrigger: {
         trigger: heroPinRef.current,
         start: "top top",
-        end: "+=150%",
+        end: "+=300%", // Increased scroll area so it doesn't cut off early
         scrub: 1,
         pin: true,
       }
     });
 
-    // Fade out line 1 slightly or keep it? The user said "Aí a pessoa vai rolar e vai aparecer: você precisa da escolha certa".
-    // We'll keep line 1 visible, and just fade in line 2 and the circle.
-    
-    // Reveal Line 2
     scrollTl.fromTo(line2Ref.current,
       { opacity: 0, y: 40 },
       { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
     );
 
-    // Draw the circle
-    if (pathRef.current) {
+    if (pathRef.current && penRef.current) {
+      // Show pen
+      scrollTl.to(penRef.current, { opacity: 1, duration: 0.1 }, "+=0.2");
+      
+      // Draw circle and move pen simultaneously
       scrollTl.to(pathRef.current, {
         strokeDashoffset: 0,
-        duration: 1.5,
-        ease: "power2.inOut"
-      }, "+=0.2");
+        duration: 2,
+        ease: "none"
+      }, "drawCircle");
+
+      scrollTl.to(penRef.current, {
+        motionPath: {
+          path: pathRef.current,
+          align: pathRef.current,
+          alignOrigin: [0, 1] // Pen tip alignment
+        },
+        duration: 2,
+        ease: "none"
+      }, "drawCircle");
+      
+      // Hide pen after drawing
+      scrollTl.to(penRef.current, { opacity: 0, duration: 0.2 });
     }
 
   }, { scope: containerRef });
@@ -156,6 +170,16 @@ export function Index() {
               você precisa da <br className="md:hidden" />
               <span className="relative inline-block ml-0 md:ml-4 mt-4 md:mt-0">
                 <span className="text-[#3451f5] relative z-10 font-bold px-6 py-2 block">escolha certa</span>
+                
+                {/* Pen Icon */}
+                <div 
+                  ref={penRef} 
+                  className="absolute left-0 top-0 z-20 text-[#3451f5] opacity-0 pointer-events-none drop-shadow-md"
+                  style={{ transformOrigin: "bottom left" }}
+                >
+                  <PenTool size={28} />
+                </div>
+
                 {/* SVG Circle to draw around (Multi-loop pen scribble) */}
                 <svg 
                   className="absolute inset-0 w-full h-full z-0 overflow-visible scale-[1.15]" 
