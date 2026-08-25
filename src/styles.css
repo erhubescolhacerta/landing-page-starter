@@ -152,6 +152,9 @@
     color: var(--color-foreground);
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   html {
@@ -173,6 +176,29 @@
 .e2vc-font {
   font-family: 'Inter Tight', system-ui, sans-serif;
   letter-spacing: -0.01em;
+}
+
+@keyframes marquee-vertical {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+.marquee-track {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: marquee-vertical 30s linear infinite;
+  will-change: transform;
+}
+.marquee-track.reverse {
+  animation-direction: reverse;
+}
+.marquee-track.fast {
+  animation-duration: 22s;
+}
+
+.draw-circle {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
 }
 
 /* Mobile-First & Touch Optimization Rules */

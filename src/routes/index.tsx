@@ -1,10 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -18,58 +15,58 @@ export const Route = createFileRoute("/")({
 
 export function Index() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
-  const titleRef = useRef<HTMLHeadingElement>(null);
+  
+  const logoRef = useRef<HTMLDivElement>(null);
+  const imagesContainerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLHeadingElement>(null);
+  const pathRef = useRef<SVGPathElement>(null);
 
-  // 17 images from public/media
-  const images = Array.from({ length: 17 }, (_, i) => `/media/img-${i + 1}.jpeg`);
+  // 17 images from public/media, split into 3 columns
+  const allImages = Array.from({ length: 17 }, (_, i) => `/media/img-${i + 1}.jpeg`);
+  const col1 = [...allImages.slice(0, 6), ...allImages.slice(0, 6)]; // Double for marquee loop
+  const col2 = [...allImages.slice(6, 12), ...allImages.slice(6, 12)];
+  const col3 = [...allImages.slice(12, 17), allImages[0], ...allImages.slice(12, 17), allImages[0]];
 
   useGSAP(() => {
     if (!containerRef.current) return;
 
-    // Text reveal animation (Optional text animation)
-    gsap.fromTo(titleRef.current, 
-      { y: 50, opacity: 0 }, 
-      { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.2 }
+    const tl = gsap.timeline({ delay: 0.2 });
+
+    // 1. Logo appears
+    tl.fromTo(logoRef.current, 
+      { opacity: 0, y: -20 }, 
+      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
     );
 
-    // Mobile-first scroll animation: spread out effect like a deck of cards
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "+=200%", // Scroll distance
-        scrub: 1,
-        pin: true,
-      }
-    });
+    // 2. Images container fades in
+    tl.fromTo(imagesContainerRef.current,
+      { opacity: 0, scale: 0.95 },
+      { opacity: 1, scale: 1, duration: 1.2, ease: "power2.out" },
+      "-=0.4"
+    );
 
-    // The first image stays centered and slightly scales up
-    tl.to(imagesRef.current[0], { scale: 1.05, duration: 1 }, 0);
+    // 3. Text reveals
+    tl.fromTo(textRef.current,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+      "-=0.6"
+    );
 
-    // The rest of the images fan out / translate out of the stack
-    imagesRef.current.slice(1).forEach((img, i) => {
-      if (!img) return;
-      
-      const yOffset = 50 + (i * 25); 
-      const xOffset = i % 2 === 0 ? 15 + (i * 8) : -(15 + (i * 8)); 
-      const rotation = i % 2 === 0 ? 4 + (i * 2) : -(4 + (i * 2));
-      
-      tl.to(img, {
-        y: yOffset,
-        x: xOffset,
-        rotation: rotation,
-        opacity: 1 - (i * 0.04),
-        duration: 1,
-        ease: "power2.out"
-      }, 0);
-    });
+    // 4. Circle draws around "Escola Certa"
+    if (pathRef.current) {
+      tl.to(pathRef.current, {
+        strokeDashoffset: 0,
+        duration: 1.2,
+        ease: "power2.inOut"
+      }, "+=0.3");
+    }
+
   }, { scope: containerRef });
 
   return (
-    <div className="bg-[#fcf7f0] text-[#1c2121] overflow-hidden e2vc-font isolate relative min-h-screen">
+    <div ref={containerRef} className="bg-[#fcf7f0] text-[#1c2121] overflow-hidden e2vc-font isolate relative min-h-screen flex flex-col">
       {/* Background Grid & Noise */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-50">
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-40">
         <svg width="100%" height="100%" className="absolute inset-0">
           <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
             <path d="M 64 0 L 0 0 0 64" fill="none" stroke="rgba(28, 33, 33, 0.15)" strokeWidth="1"/>
@@ -79,49 +76,84 @@ export function Index() {
       </div>
       <div className="noise-overlay z-10 mix-blend-overlay"></div>
 
+      {/* 1. Logo Intro */}
+      <div ref={logoRef} className="relative z-50 w-full p-6 flex justify-between items-center opacity-0">
+        <div className="text-2xl font-bold tracking-tight lowercase">escolha<span className="text-[#3451f5]">.</span>certa</div>
+        <div className="text-sm font-medium uppercase tracking-widest opacity-60">Manifesto</div>
+      </div>
+
+      {/* 2. Marquee Images (Background Conveyor Belt) */}
       <div 
-        ref={containerRef}
-        className="relative z-20 w-full h-screen flex flex-col items-center justify-center px-4 pt-16 sm:pt-24"
+        ref={imagesContainerRef}
+        className="absolute inset-0 z-0 flex gap-4 md:gap-8 justify-center items-center opacity-0 overflow-hidden pointer-events-none"
+        style={{ padding: '0 2vw' }}
       >
-        {/* Headline */}
-        <div className="absolute top-10 md:top-20 z-50 text-center px-4 w-full max-w-5xl mx-auto pointer-events-none">
-          <p className="mb-4 text-[0.775rem] uppercase tracking-[0.02em] font-normal text-[#1c2121]/50">
+        {/* Fade Out Masks at top and bottom */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#fcf7f0] via-transparent to-[#fcf7f0] pointer-events-none opacity-90" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#fcf7f0] via-transparent to-[#fcf7f0] pointer-events-none opacity-80 hidden md:block" />
+        
+        {/* Column 1 */}
+        <div className="w-1/3 md:w-1/4 max-w-[300px] h-[150vh] overflow-hidden -mt-[20vh]">
+          <div className="marquee-track">
+            {col1.map((src, i) => (
+              <img key={`c1-${i}`} src={src} className="w-full h-auto aspect-[3/4] object-cover rounded-xl shadow-lg mix-blend-multiply opacity-80" alt="" />
+            ))}
+          </div>
+        </div>
+        
+        {/* Column 2 (reverse) */}
+        <div className="w-1/3 md:w-1/4 max-w-[300px] h-[150vh] overflow-hidden mt-[10vh] hidden sm:block">
+          <div className="marquee-track reverse fast">
+            {col2.map((src, i) => (
+              <img key={`c2-${i}`} src={src} className="w-full h-auto aspect-[3/4] object-cover rounded-xl shadow-lg mix-blend-multiply opacity-80" alt="" />
+            ))}
+          </div>
+        </div>
+
+        {/* Column 3 */}
+        <div className="w-1/3 md:w-1/4 max-w-[300px] h-[150vh] overflow-hidden -mt-[10vh]">
+          <div className="marquee-track">
+            {col3.map((src, i) => (
+              <img key={`c3-${i}`} src={src} className="w-full h-auto aspect-[3/4] object-cover rounded-xl shadow-lg mix-blend-multiply opacity-80" alt="" />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Headline & Circle */}
+      <div className="relative z-40 flex-1 flex flex-col items-center justify-center px-4 pointer-events-none">
+        <div ref={textRef} className="text-center max-w-5xl opacity-0">
+          <p className="mb-8 md:mb-12 text-[0.775rem] md:text-sm uppercase tracking-[0.1em] font-medium text-[#1c2121]/60 bg-[#fcf7f0]/80 backdrop-blur-md px-6 py-2 rounded-full inline-block shadow-sm">
             Apenas referências não bastam
           </p>
-          <h1 
-            ref={titleRef}
-            className="text-[clamp(2.8rem,6vw,5.6rem)] font-semibold tracking-[-0.01em] leading-[0.95] lowercase"
-          >
-            você precisa da <br className="hidden md:block" />
-            <span className="text-[#3451f5]">
-              Escola Certa
+          <h1 className="text-[clamp(2.5rem,7vw,6.5rem)] font-semibold tracking-[-0.02em] leading-[1.05] lowercase text-[#1c2121]">
+            não adianta apenas ter <br className="hidden md:block"/> 
+            boas referências, <br/>
+            você precisa da <br/>
+            <span className="relative inline-block mt-4 md:mt-6">
+              <span className="text-[#3451f5] relative z-10 font-bold px-6 py-2 block">Escola Certa</span>
+              {/* SVG Circle to draw around */}
+              <svg 
+                className="absolute inset-0 w-full h-full z-0 overflow-visible scale-[1.15]" 
+                viewBox="0 0 300 100" 
+                preserveAspectRatio="none"
+              >
+                <path
+                  ref={pathRef}
+                  className="draw-circle"
+                  d="M 150 90 C 20 90, -10 60, 20 30 C 50 0, 250 0, 280 30 C 310 60, 280 90, 150 90 Z"
+                  fill="none"
+                  stroke="#3451f5"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
             </span>
           </h1>
         </div>
-
-        {/* Image Stack */}
-        <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md aspect-[4/5] mx-auto mt-28 md:mt-40">
-          {images.map((src, idx) => (
-            <img
-              key={idx}
-              ref={el => {
-                imagesRef.current[idx] = el;
-              }}
-              src={src}
-              alt={`Galeria ${idx + 1}`}
-              className="absolute top-0 left-0 w-full h-full object-cover rounded-2xl origin-bottom"
-              style={{
-                zIndex: images.length - idx, // First image is on top
-                boxShadow: "0 25px 50px -12px rgba(28,33,33,0.3)",
-                willChange: "transform, opacity"
-              }}
-            />
-          ))}
-        </div>
       </div>
       
-      {/* Spacer to allow scrolling past the pinned section */}
-      <div className="h-[200vh] bg-[#fcf7f0] relative z-10"></div>
     </div>
   );
 }
