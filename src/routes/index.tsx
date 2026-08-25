@@ -100,7 +100,7 @@ export function Index() {
   }, { scope: containerRef });
 
   return (
-    <div ref={containerRef} className="bg-[#fcf7f0] text-[#1c2121] overflow-hidden e2vc-font isolate relative min-h-screen flex flex-col">
+    <div ref={containerRef} className="bg-[#fcf7f0] text-[#1c2121] overflow-x-clip e2vc-font isolate relative min-h-screen">
       {/* Background Grid & Noise */}
       <div className="fixed inset-0 pointer-events-none z-0 opacity-40">
         <svg width="100%" height="100%" className="absolute inset-0">
@@ -113,7 +113,7 @@ export function Index() {
       <div className="noise-overlay z-10 mix-blend-overlay fixed inset-0"></div>
 
       {/* Pinned Hero Section */}
-      <div ref={heroPinRef} className="relative w-full h-screen flex flex-col">
+      <div ref={heroPinRef} className="relative w-full h-screen block">
         {/* 1. Logo Intro */}
         <div ref={logoRef} className="relative z-50 w-full p-6 flex justify-between items-center opacity-0">
           <div className="text-2xl font-bold tracking-tight lowercase">escolha<span className="text-[#3451f5]">.</span>certa</div>
@@ -159,7 +159,7 @@ export function Index() {
         </div>
 
         {/* 3. Headline & Circle */}
-        <div className="relative z-40 flex-1 flex flex-col items-center justify-center px-4 pointer-events-none">
+        <div className="absolute inset-0 z-40 flex flex-col items-center justify-center px-4 pointer-events-none">
           <div className="text-center max-w-5xl flex flex-col items-center">
             
             <span ref={line1Ref} className="opacity-0 text-[clamp(2.5rem,6vw,5.5rem)] font-semibold tracking-[-0.02em] leading-[1.1] lowercase text-[#1c2121]">
