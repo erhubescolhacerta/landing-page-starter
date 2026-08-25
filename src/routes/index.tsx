@@ -123,9 +123,6 @@ export function Index() {
       {/* 3. Headline & Circle */}
       <div className="relative z-40 flex-1 flex flex-col items-center justify-center px-4 pointer-events-none">
         <div ref={textRef} className="text-center max-w-5xl opacity-0">
-          <p className="mb-8 md:mb-12 text-[0.775rem] md:text-sm uppercase tracking-[0.1em] font-medium text-[#1c2121]/60 bg-[#fcf7f0]/80 backdrop-blur-md px-6 py-2 rounded-full inline-block shadow-sm">
-            Apenas referências não bastam
-          </p>
           <h1 className="text-[clamp(2.5rem,7vw,6.5rem)] font-semibold tracking-[-0.02em] leading-[1.05] lowercase text-[#1c2121]">
             não adianta apenas ter <br className="hidden md:block"/> 
             boas referências, <br/>
