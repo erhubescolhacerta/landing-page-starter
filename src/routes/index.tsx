@@ -50,28 +50,32 @@ export function Index() {
       { opacity: 1, scale: 1, duration: 1.2, ease: "power2.out" },
       "-=0.4"
     );
-    introTl.fromTo(line1Ref.current,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
-      "-=0.6"
-    );
 
     // Scroll timeline (On Scroll)
     const scrollTl = gsap.timeline({
       scrollTrigger: {
         trigger: heroPinRef.current,
         start: "top top",
-        end: "+=300%", // Increased scroll area so it doesn't cut off early
+        end: "+=300%", // Long scroll area
         scrub: 1,
         pin: true,
       }
     });
 
-    scrollTl.fromTo(line2Ref.current,
+    // Reveal Line 1 (Scroll 1)
+    scrollTl.fromTo(line1Ref.current,
       { opacity: 0, y: 40 },
       { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
     );
 
+    // Reveal Line 2 (Scroll 2)
+    scrollTl.fromTo(line2Ref.current,
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
+      "+=0.3"
+    );
+
+    // Draw the circle and pen
     if (pathRef.current && penRef.current) {
       // Show pen
       scrollTl.to(penRef.current, { opacity: 1, duration: 0.1 }, "+=0.2");
@@ -171,16 +175,7 @@ export function Index() {
               <span className="relative inline-block ml-0 md:ml-4 mt-4 md:mt-0">
                 <span className="text-[#3451f5] relative z-10 font-bold px-6 py-2 block">escolha certa</span>
                 
-                {/* Pen Icon */}
-                <div 
-                  ref={penRef} 
-                  className="absolute left-0 top-0 z-20 text-[#3451f5] opacity-0 pointer-events-none drop-shadow-md"
-                  style={{ transformOrigin: "bottom left" }}
-                >
-                  <PenTool size={28} />
-                </div>
-
-                {/* SVG Circle to draw around (Multi-loop pen scribble) */}
+                {/* SVG Circle and Pen */}
                 <svg 
                   className="absolute inset-0 w-full h-full z-0 overflow-visible scale-[1.15]" 
                   viewBox="0 0 300 100" 
@@ -206,6 +201,14 @@ export function Index() {
                     strokeLinejoin="round"
                     vectorEffect="non-scaling-stroke"
                   />
+                  
+                  {/* Embedded Pen Icon */}
+                  <g ref={penRef} style={{ opacity: 0 }}>
+                    <svg x="-12" y="-24" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3451f5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                      <path d="m15 5 4 4" />
+                    </svg>
+                  </g>
                 </svg>
               </span>
             </span>
