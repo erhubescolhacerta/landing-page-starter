@@ -133,17 +133,29 @@
 }
 
 @layer base {
+  /* Esconde a barra de rolagem mas mantém o scroll funcional */
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0px;
+    background: transparent;
+  }
+  
+  html {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
   * {
     border-color: var(--color-border);
   }
 
   :root {
-    --e2vc-bg: rgb(66, 86, 59);
+    --e2vc-bg: #fcf7f0;
     --e2vc-ink: #1c2121;
-    --e2vc-grid: rgb(60, 79, 52);
+    --e2vc-grid: rgba(28, 33, 33, 0.15);
     --e2vc-accent: #3451f5;
     --selection-bg: var(--e2vc-accent);
-    --selection-ink: rgb(66, 86, 59);
+    --selection-ink: #fcf7f0;
   }
 
   body {
