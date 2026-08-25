@@ -178,7 +178,7 @@ export function Index() {
                 
                 {/* SVG Circle and Pen */}
                 <svg 
-                  className="absolute inset-0 w-full h-full z-0 overflow-visible scale-[1.15]" 
+                  className="absolute inset-0 w-full h-full z-30 overflow-visible scale-[1.15] pointer-events-none" 
                   viewBox="0 0 300 100" 
                   preserveAspectRatio="none"
                 >
