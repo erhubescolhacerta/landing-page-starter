@@ -195,11 +195,6 @@
   animation-duration: 22s;
 }
 
-.draw-circle {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-}
-
 /* Mobile-First & Touch Optimization Rules */
 @media (max-width: 767px) {
   .headline {

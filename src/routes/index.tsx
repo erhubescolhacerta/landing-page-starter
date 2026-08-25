@@ -77,6 +77,9 @@ export function Index() {
 
     // Draw the circle and pen
     if (pathRef.current && penRef.current) {
+      const length = pathRef.current.getTotalLength();
+      gsap.set(pathRef.current, { strokeDasharray: length, strokeDashoffset: length });
+      
       // Show pen
       scrollTl.to(penRef.current, { opacity: 1, duration: 0.1 }, "+=0.2");
       
@@ -89,9 +92,7 @@ export function Index() {
 
       scrollTl.to(penRef.current, {
         motionPath: {
-          path: pathRef.current,
-          align: pathRef.current,
-          alignOrigin: [0, 1] // Pen tip alignment
+          path: pathRef.current
         },
         duration: 2,
         ease: "none"
@@ -181,10 +182,21 @@ export function Index() {
                   viewBox="0 0 300 100" 
                   preserveAspectRatio="none"
                 >
+                  <defs>
+                    <linearGradient id="penGrad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#fff" />
+                      <stop offset="50%" stopColor="#ccc" />
+                      <stop offset="100%" stopColor="#888" />
+                    </linearGradient>
+                    <linearGradient id="blueGrad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#1a2980" />
+                      <stop offset="100%" stopColor="#3451f5" />
+                    </linearGradient>
+                  </defs>
+
                   <path
                     ref={pathRef}
                     className="draw-circle"
-                    pathLength="1"
                     d="M 150 90 
                        C 30 95, -10 60, 20 25 
                        C 50 -10, 260 -5, 285 30 
@@ -203,12 +215,22 @@ export function Index() {
                     vectorEffect="non-scaling-stroke"
                   />
                   
-                  {/* Embedded Pen Icon */}
+                  {/* Embedded 3D Pen Icon */}
                   <g ref={penRef} style={{ opacity: 0 }}>
-                    <svg x="-12" y="-24" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3451f5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-                      <path d="m15 5 4 4" />
-                    </svg>
+                    {/* The transform moves the pen so its absolute tip is at 0,0, pointing up-right */}
+                    <g transform="translate(0, 0) scale(1.5)">
+                      {/* Shadow */}
+                      <path d="M0 0 L16 -16 L20 -12 L4 4 Z" fill="rgba(0,0,0,0.15)" transform="translate(2, 2)"/>
+                      {/* Tip */}
+                      <path d="M0 0 L4 -8 L8 -4 Z" fill="#e0e0e0" />
+                      <path d="M0 0 L2 -4 L4 -2 Z" fill="#3451f5" />
+                      {/* Body */}
+                      <path d="M4 -8 L20 -24 L24 -20 L8 -4 Z" fill="url(#blueGrad)" />
+                      {/* Highlight */}
+                      <path d="M5 -7 L20 -22 L21 -21 L6 -5 Z" fill="rgba(255,255,255,0.4)" />
+                      {/* Top */}
+                      <path d="M20 -24 L24 -20 L26 -22 L22 -26 Z" fill="url(#penGrad)" />
+                    </g>
                   </g>
                 </svg>
               </span>
