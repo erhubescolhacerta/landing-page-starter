@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -137,6 +138,15 @@
     border-color: var(--color-border);
   }
 
+  :root {
+    --e2vc-bg: #fcf7f0;
+    --e2vc-ink: #1c2121;
+    --e2vc-grid: rgba(28, 33, 33, 0.15);
+    --e2vc-accent: #3451f5;
+    --selection-bg: var(--e2vc-accent);
+    --selection-ink: #fcf7f0;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -148,6 +158,21 @@
     overflow-x: hidden;
     scroll-behavior: smooth;
   }
+}
+
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('https://cdn.prod.website-files.com/6a211c1a0b02148d1bf6abbe/6a291450de1817441627d5c2_noise.png');
+  background-repeat: repeat;
+  background-size: auto;
+  opacity: 0.6;
+}
+
+.e2vc-font {
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  letter-spacing: -0.01em;
 }
 
 /* Mobile-First & Touch Optimization Rules */
