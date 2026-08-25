@@ -45,7 +45,10 @@ export function Index() {
     });
 
     // The first image stays centered and slightly scales up
-    tl.to(imagesRef.current[0], { scale: 1.05, duration: 1 }, 0);
+    const firstImage = imagesRef.current[0];
+    if (firstImage) {
+      tl.to(firstImage, { scale: 1.05, duration: 1 }, 0);
+    }
 
     // The rest of the images fan out / translate out of the stack
     imagesRef.current.slice(1).forEach((img, i) => {
