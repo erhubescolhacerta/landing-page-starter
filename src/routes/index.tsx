@@ -3,9 +3,9 @@ import { useEffect } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    title: "e2vc - Landing Page",
+    title: "Escolha Certa - Landing Page",
     meta: [
-      { name: "description", content: "we just have great taste in friends" },
+      { name: "description", content: "Escolha Certa - Otimização Mobile-First e Alta Conversão" },
     ],
   }),
   component: Index,
