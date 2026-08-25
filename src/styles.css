@@ -138,12 +138,12 @@
   }
 
   :root {
-    --e2vc-bg: #fcf7f0;
+    --e2vc-bg: rgb(66, 86, 59);
     --e2vc-ink: #1c2121;
-    --e2vc-grid: rgba(28, 33, 33, 0.15);
+    --e2vc-grid: rgb(60, 79, 52);
     --e2vc-accent: #3451f5;
     --selection-bg: var(--e2vc-accent);
-    --selection-ink: #fcf7f0;
+    --selection-ink: rgb(66, 86, 59);
   }
 
   body {

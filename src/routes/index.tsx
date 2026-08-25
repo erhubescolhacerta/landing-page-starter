@@ -105,12 +105,12 @@ export function Index() {
   }, { scope: containerRef });
 
   return (
-    <div ref={containerRef} className="bg-[#fcf7f0] text-[#1c2121] overflow-x-clip e2vc-font isolate relative min-h-screen">
+    <div ref={containerRef} className="bg-[#42563b] text-[#1c2121] overflow-x-clip e2vc-font isolate relative min-h-screen">
       {/* Background Grid & Noise */}
       <div className="fixed inset-0 pointer-events-none z-0 opacity-40">
         <svg width="100%" height="100%" className="absolute inset-0">
           <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
-            <path d="M 64 0 L 0 0 0 64" fill="none" stroke="rgba(28, 33, 33, 0.15)" strokeWidth="1"/>
+            <path d="M 64 0 L 0 0 0 64" fill="none" stroke="rgb(60, 79, 52)" strokeWidth="1"/>
           </pattern>
           <rect width="100%" height="100%" fill="url(#grid)" />
         </svg>
@@ -132,8 +132,8 @@ export function Index() {
           style={{ padding: '0 2vw' }}
         >
           {/* Fade Out Masks at top and bottom */}
-          <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#fcf7f0] via-transparent to-[#fcf7f0] pointer-events-none opacity-90" />
-          <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#fcf7f0] via-transparent to-[#fcf7f0] pointer-events-none opacity-80 hidden md:block" />
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#42563b] via-transparent to-[#42563b] pointer-events-none opacity-90" />
+          <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#42563b] via-transparent to-[#42563b] pointer-events-none opacity-80 hidden md:block" />
           
           {/* Column 1 */}
           <div className="w-1/3 md:w-1/4 max-w-[300px] h-[150vh] overflow-hidden -mt-[20vh]">
@@ -241,7 +241,7 @@ export function Index() {
       </div>
       
       {/* A spacer div for extra scroll area after pinning */}
-      <div className="h-screen bg-[#fcf7f0] flex flex-col items-center justify-center relative z-20 px-6">
+      <div className="h-screen bg-[#42563b] flex flex-col items-center justify-center relative z-20 px-6">
         <p className="text-xl md:text-3xl font-medium max-w-3xl text-center text-[#1c2121]/80">
           A escolha certa para o seu futuro começa aqui.
         </p>
