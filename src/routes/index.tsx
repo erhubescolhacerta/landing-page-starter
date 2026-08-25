@@ -173,7 +173,7 @@ export function Index() {
 
             <span ref={line2Ref} className="opacity-0 text-[clamp(2.5rem,6vw,5.5rem)] font-semibold tracking-[-0.02em] leading-[1.1] lowercase text-[#1c2121] mt-2 md:mt-4">
               você precisa da <br className="md:hidden" />
-              <span className="relative inline-block ml-0 md:ml-4 mt-4 md:mt-0">
+              <span className="relative inline-block ml-0 md:ml-4 mt-4 md:mt-0 z-30">
                 <span className="text-[#3451f5] relative z-10 font-bold px-6 py-2 block">escolha certa</span>
                 
                 {/* SVG Circle and Pen */}
@@ -189,8 +189,8 @@ export function Index() {
                       <stop offset="100%" stopColor="#888" />
                     </linearGradient>
                     <linearGradient id="blueGrad" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stopColor="#1a2980" />
-                      <stop offset="100%" stopColor="#3451f5" />
+                      <stop offset="0%" stopColor="#081033" />
+                      <stop offset="100%" stopColor="#122580" />
                     </linearGradient>
                   </defs>
 
@@ -223,7 +223,7 @@ export function Index() {
                       <path d="M0 0 L16 -16 L20 -12 L4 4 Z" fill="rgba(0,0,0,0.15)" transform="translate(2, 2)"/>
                       {/* Tip */}
                       <path d="M0 0 L4 -8 L8 -4 Z" fill="#e0e0e0" />
-                      <path d="M0 0 L2 -4 L4 -2 Z" fill="#3451f5" />
+                      <path d="M0 0 L2 -4 L4 -2 Z" fill="#122580" />
                       {/* Body */}
                       <path d="M4 -8 L20 -24 L24 -20 L8 -4 Z" fill="url(#blueGrad)" />
                       {/* Highlight */}
