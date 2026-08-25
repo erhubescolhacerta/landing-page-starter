@@ -140,5 +140,34 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
   }
 }
+
+/* Mobile-First & Touch Optimization Rules */
+@media (max-width: 767px) {
+  .headline {
+    font-size: clamp(2.2rem, 10vw, 3.8rem) !important;
+    line-height: 1.05 !important;
+  }
+
+  .bold-nav-full__bar {
+    padding: 12px 18px !important;
+  }
+
+  .editorial-title {
+    font-size: clamp(2.5rem, 12vw, 4.2rem) !important;
+  }
+
+  .page-section {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+}
+
