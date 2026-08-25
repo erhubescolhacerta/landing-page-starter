@@ -176,7 +176,7 @@ export function Index() {
             <span ref={line2Ref} className="opacity-0 text-[clamp(2.5rem,6vw,5.5rem)] font-semibold tracking-[-0.02em] leading-[1.1] lowercase text-[#1c2121] mt-2 md:mt-4">
               você precisa da <br className="md:hidden" />
               <span className="relative inline-block ml-0 md:ml-4 mt-4 md:mt-0 z-30">
-                <span className="text-[#3451f5] relative z-10 font-bold px-6 py-2 block">escolha certa</span>
+                <span className="text-[#3451f5] relative z-10 font-bold px-6 py-2 block" style={{ fontFamily: "McQueen, sans-serif" }}>escolha certa</span>
                 
                 {/* SVG Circle and Pen */}
                 <svg 

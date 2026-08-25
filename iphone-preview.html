@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>iPhone Preview - Escolha Certa</title>
+  <style>
+    body {
+      background-color: #e5e7eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .iphone-frame {
+      /* iPhone 14 Pro dimensions */
+      width: 393px;
+      height: 852px;
+      border: 14px solid #1a1a1a;
+      border-radius: 50px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4);
+      overflow: hidden;
+      position: relative;
+      background: #fff;
+    }
+    /* "Dynamic Island" notch */
+    .notch {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 35px;
+      background-color: #1a1a1a;
+      border-radius: 20px;
+      z-index: 1000;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      /* Prevent scrolling on the body to act like native */
+    }
+    .controls {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    }
+    button {
+      background: #3451f5;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #2841cc;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <h3 style="margin-top: 0">Preview do iPhone 📱</h3>
+    <p style="color: #4b5563; font-size: 14px; margin-bottom: 5px;">Seu servidor (npm run dev) precisa estar rodando.</p>
+    <p style="font-size: 14px; margin-top: 0;">Carregando: <strong>http://localhost:5173</strong></p>
+    <button onclick="document.getElementById('preview-frame').src = document.getElementById('preview-frame').src">Recarregar Iframe</button>
+  </div>
+  
+  <div class="iphone-frame">
+    <div class="notch"></div>
+    <iframe id="preview-frame" src="http://localhost:5173"></iframe>
+  </div>
+</body>
+</html>
