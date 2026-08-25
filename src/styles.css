@@ -196,8 +196,8 @@
 }
 
 .draw-circle {
-  stroke-dasharray: 2500;
-  stroke-dashoffset: 2500;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
 }
 
 /* Mobile-First & Touch Optimization Rules */

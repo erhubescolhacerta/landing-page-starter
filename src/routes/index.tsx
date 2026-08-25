@@ -184,6 +184,7 @@ export function Index() {
                   <path
                     ref={pathRef}
                     className="draw-circle"
+                    pathLength="1"
                     d="M 150 90 
                        C 30 95, -10 60, 20 25 
                        C 50 -10, 260 -5, 285 30 
