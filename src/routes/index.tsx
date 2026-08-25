@@ -121,7 +121,7 @@ export function Index() {
       <div ref={heroPinRef} className="relative w-full h-screen block">
         {/* 1. Logo Intro */}
         <div ref={logoRef} className="relative z-50 w-full p-6 flex justify-between items-center opacity-0">
-          <div className="text-2xl font-bold tracking-tight lowercase">escolha<span className="text-[#3451f5]">.</span>certa</div>
+          <div className="text-2xl font-bold tracking-tight lowercase">@ei<span className="text-[#3451f5]">.</span>escolhacerta</div>
           <div className="text-sm font-medium uppercase tracking-widest opacity-60">Manifesto</div>
         </div>
 
