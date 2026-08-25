@@ -131,8 +131,8 @@ export function Index() {
             boas referências, <br/>
             você precisa da <br/>
             <span className="relative inline-block mt-4 md:mt-6">
-              <span className="text-[#3451f5] relative z-10 font-bold px-6 py-2 block">Escola Certa</span>
-              {/* SVG Circle to draw around */}
+              <span className="text-[#3451f5] relative z-10 font-bold px-6 py-2 block">escolha certa</span>
+              {/* SVG Circle to draw around (Multi-loop pen scribble) */}
               <svg 
                 className="absolute inset-0 w-full h-full z-0 overflow-visible scale-[1.15]" 
                 viewBox="0 0 300 100" 
@@ -141,11 +141,21 @@ export function Index() {
                 <path
                   ref={pathRef}
                   className="draw-circle"
-                  d="M 150 90 C 20 90, -10 60, 20 30 C 50 0, 250 0, 280 30 C 310 60, 280 90, 150 90 Z"
+                  d="M 150 90 
+                     C 30 95, -10 60, 20 25 
+                     C 50 -10, 260 -5, 285 30 
+                     C 310 65, 270 95, 150 90 
+                     C 40 85, 0 50, 30 20 
+                     C 60 -10, 240 -15, 270 20 
+                     C 300 55, 250 85, 150 95
+                     C 60 105, 10 75, 25 45
+                     C 40 15, 220 5, 260 40
+                     C 300 75, 240 100, 150 85"
                   fill="none"
                   stroke="#3451f5"
-                  strokeWidth="4"
+                  strokeWidth="3"
                   strokeLinecap="round"
+                  strokeLinejoin="round"
                   vectorEffect="non-scaling-stroke"
                 />
               </svg>
